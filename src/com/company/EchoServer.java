@@ -1,16 +1,19 @@
 package com.company;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class EchoServer {
 
-    Robomouse robomouse;
-    public EchoServer() {
-        robomouse = new Robomouse();
-    }
+
 
     public void establish() {
+
+
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(1234);
@@ -42,10 +45,23 @@ public class EchoServer {
                 String s = inputLine;
                 System.out.println(inputLine);
                 ThreadBuilder tb = new ThreadBuilder();
-                //tb.createThread(inputLine);
-                Singleton.getInstance().setXpos(Integer.parseInt(s));
-                Singleton.getInstance().setYpos(Integer.parseInt(s));
-                robomouse.ini();
+
+                if (inputLine.startsWith("-")) {
+
+                    int[] pointerValues;
+
+                    String inputValue = inputLine.replace("-", "");
+
+                    pointerValues = IntUtil.getParsedXY(inputValue);
+
+
+                    Singleton.getInstance().setXPos(pointerValues[0]);
+                    Singleton.getInstance().setYPos(pointerValues[1]);
+                    Singleton.getInstance().setUpdate(true);
+                } else {
+                    tb.createThread(inputLine);
+                }
+
 
                 if (inputLine.equals("Bye.")) break;
             }

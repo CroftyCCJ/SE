@@ -6,7 +6,10 @@ public class Main {
 	// write your code here
 
 
+        Robomouse robomouse = new Robomouse();
 
+
+        robomouse.mouseMoveTest();
         EchoServer es = new EchoServer();
         es.establish();
     }

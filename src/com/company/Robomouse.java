@@ -1,176 +1,111 @@
 package com.company;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
-
-public class Robomouse extends Frame implements ActionListener {
+class Robomouse extends Frame {
     // Frame
     static JFrame f;
 
     // textField
-    static TextField x, y, x1, y1;
+    static TextField x, y;
 
     // default constructor
-    Robomouse()
-    {
-
+    Robomouse() {
     }
 
 
+    public void mouseMoveTest() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                // object of class
+                Robomouse rm = new Robomouse();
+
+                // create a frame
+                f = new JFrame("Robomouse");
+
+                // set the frame to close on exit
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                // create textfield
+                x = new TextField(7);
+                y = new TextField(7);
+
+                // create a button
+                Button b = new Button("OK");
 
 
+                // create a panel
+                Panel panel = new Panel();
+
+                // add items to panel
+                panel.add(x);
+                panel.add(y);
+                panel.add(b);
+
+                f.add(panel);
+
+                // setsize of frame
+                f.setSize(300, 300);
+
+                f.show();
+
+                try {
+                    Robot r = new Robot();
+                    int xi1, yi1, xi, yi;
 
 
-    public void ini(){
+                    // get x and y points
+            /*xi1 = Integer.parseInt(x.getText());
+            yi1 = Integer.parseInt(y.getText());*/
 
 
+                    while (true) {
 
-        // object of class
-        Robomouse rm = new Robomouse();
+                        if (Singleton.getInstance().isUpdate()) {
 
-        // create a frame
-        f = new JFrame("Robomouse");
+                            // get initial loction
+                            Point p = MouseInfo.getPointerInfo().getLocation();
+                            xi = p.x;
+                            yi = p.y;
 
-        // set the frame to close on exit
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            xi1 = Singleton.getInstance().getXPos();
+                            yi1 = Singleton.getInstance().getYPos();
 
-        // create textfield
-        x = new TextField(7);
-        y = new TextField(7);
+                            int i = xi, j = yi;
 
-        x1 = new TextField(7);
-        y1 = new TextField(7);
+                            // slowly move the mouse to detined location
+                            while (i != xi1 || j != yi1) {
+                                // move the mouse to the other point
+                                r.mouseMove(i, j);
 
-        // create a button
-        Button b = new Button("OK");
+                                if (i < xi1)
+                                    i++;
+                                if (j < yi1)
+                                    j++;
 
-        // add actionListener
-        b.addActionListener(rm);
+                                if (i > xi1)
+                                    i--;
+                                if (j > yi1)
+                                    j--;
 
-        // create a panel
-        Panel p = new Panel();
-
-        // create labels
-        Label l, l1;
-
-        l = new Label("from");
-        l1 = new Label("to");
-
-        // add items to panel
-        p.add(l);
-        p.add(x);
-        p.add(y);
-        p.add(l1);
-        p.add(x1);
-        p.add(y1);
-        p.add(b);
-
-        f.add(p);
-
-        // setsize of frame
-        f.setSize(600, 300);
-
-        f.show();
-
-       actionPerformed(e);
-
-    // if button is pressed
-    public void actionPerformed(ActionEvent e)
-    {
-        try {
-            Robot r = new Robot();
-            int xi, yi, xi1, yi1;
-
-            // get x and y points
-            xi = Integer.parseInt(x.getText());
-            yi = Integer.parseInt(y.getText());
-            xi1 = Singleton.getInstance().getXpos();
-            yi1 = Singleton.getInstance().getYpos();
-
-            // move the mouse to that point
-            r.mouseMove(xi, yi);
-
-            // press the mouse
-            r.mousePress(InputEvent.BUTTON1_MASK);
-
-            int i = xi, j = yi;
-
-            // slowly drag the mouse to detined location
-            while (i < xi1 || j < yi1) {
-                // move the mouse to the other point
-                r.mouseMove(i, j);
-
-                if (i < xi1)
-                    i++;
-                if (j < yi1)
-                    j++;
-
-                // wait
-                Thread.sleep(30);
+                                // wait
+                                //Thread.sleep(30);
+                            }
+                            Singleton.getInstance().setUpdate(false);
+                        }
+                    }
+                } catch (Exception evt) {
+                    System.err.println(evt.getMessage());
+                }
             }
-
-            // wait
-            Thread.sleep(4000);
-
-            // press the mouse
-            r.mouseRelease(InputEvent.BUTTON1_MASK);
-        }
-        catch (Exception evt) {
-            System.err.println(evt.getMessage());
-        }
-    }
-
-
-
-
-    private void doAction()
-    {
-        try {
-            Robot r = new Robot();
-            int xi, yi, xi1, yi1;
-
-            // get x and y points
-            xi = Integer.parseInt(x.getText());
-            yi = Integer.parseInt(y.getText());
-            xi1 = Singleton.getInstance().getXpos();
-            yi1 = Singleton.getInstance().getYpos();
-
-            // move the mouse to that point
-            r.mouseMove(xi, yi);
-
-            // press the mouse
-            r.mousePress(InputEvent.BUTTON1_MASK);
-
-            int i = xi, j = yi;
-
-            // slowly drag the mouse to detined location
-            while (i < xi1 || j < yi1) {
-                // move the mouse to the other point
-                r.mouseMove(i, j);
-
-                if (i < xi1)
-                    i++;
-                if (j < yi1)
-                    j++;
-
-                // wait
-                Thread.sleep(30);
-            }
-
-            // wait
-            Thread.sleep(4000);
-
-            // press the mouse
-            r.mouseRelease(InputEvent.BUTTON1_MASK);
-        }
-        catch (Exception evt) {
-            System.err.println(evt.getMessage());
-        }
+        }).start();
 
     }
-
 }
+
 
 
