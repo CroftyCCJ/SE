@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.Database.DBHandler;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,6 +41,8 @@ public class EchoServer {
             System.exit(-1);
         }
         String inputLine, outputLine;
+        System.out.println("New Client Connected: " + clientSocket.getInetAddress().getHostAddress());
+        DBHandler.getInstance().insertIpAddress(clientSocket.getInetAddress().getHostAddress());
         try {
             while ((inputLine = in.readLine()) != null) {
                 out.println(inputLine);

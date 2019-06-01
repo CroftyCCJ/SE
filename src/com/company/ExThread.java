@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * Created by woojen on 2017-09-08.
- */
+
 public class ExThread extends Thread implements Runnable {
 
     private String command;

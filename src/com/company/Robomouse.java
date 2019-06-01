@@ -1,14 +1,11 @@
 package com.company;
 
-import javax.swing.*;
+
 import java.awt.*;
 
 class Robomouse extends Frame {
     // Frame
-    static JFrame f;
-
-    // textField
-    static TextField x, y;
+    //static JFrame f;
 
     // default constructor
     Robomouse() {
@@ -24,34 +21,6 @@ class Robomouse extends Frame {
                 // object of class
                 Robomouse rm = new Robomouse();
 
-                // create a frame
-                f = new JFrame("Robomouse");
-
-                // set the frame to close on exit
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                // create textfield
-                x = new TextField(7);
-                y = new TextField(7);
-
-                // create a button
-                Button b = new Button("OK");
-
-
-                // create a panel
-                Panel panel = new Panel();
-
-                // add items to panel
-                panel.add(x);
-                panel.add(y);
-                panel.add(b);
-
-                f.add(panel);
-
-                // setsize of frame
-                f.setSize(300, 300);
-
-                f.show();
 
                 try {
                     Robot r = new Robot();
